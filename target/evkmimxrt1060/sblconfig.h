@@ -20,6 +20,7 @@
 
 /* MCU SBL core */
 
+#define ROM_VERIFY_SBL
 #define CONFIG_MCUBOOT_MAX_IMG_SECTORS 400
 
 /* MCU SBL Flash Map */

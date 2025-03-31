@@ -47,7 +47,7 @@ const peripheral_descriptor_t g_peripherals[] = {
 
 //! @brief USB controller id array for i.MXRT1060.
 const uint32_t k_usbControllerIds[] =
-   { kUSB_ControllerEhci0, NULL};
+   { kUSB_ControllerEhci0, 0};
 
 
 ////////////////////////////////////////////////////////////////////////////////
