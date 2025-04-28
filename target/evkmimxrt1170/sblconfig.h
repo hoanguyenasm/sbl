@@ -21,6 +21,7 @@
 /* MCU SBL core */
 
 #define CONFIG_MCUBOOT_MAX_IMG_SECTORS 400
+#define SINGLE_IMAGE
 
 /* MCU SBL Flash Map */
 
@@ -35,7 +36,6 @@
 /* Flash IAP */
 
 #define COMPONENT_FLASHIAP
-#define COMPONENT_FLASHIAP_ROM
 
 /* Flash device parameters */
 
@@ -43,10 +43,6 @@
 
 /* secure */
 
-#define COMPONENT_MCUBOOT_SECURE
-#define CONFIG_BOOT_SIGNATURE
-#define CONFIG_BOOT_SIGNATURE_TYPE_RSA
-#define CONFIG_BOOT_SIGNATURE_TYPE_RSA_LEN 2048
 #define COMPONENT_MBEDTLS
 #define SBL_MBEDTLS_CONFIG_FILE "ksdk_mbedtls_config.h"
 
