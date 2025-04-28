@@ -103,6 +103,8 @@ Ensure these settings are correctly configured in your SBL build to match your r
    - This configuration places your application code correctly in the flash area after the header
 
 3. **Build Application**
+   - Set `XIP_BOOT_HEADER_ENABLE = 0` in the application project
+   - This ensures the application firmware relies on the SBL for booting
    - Compile the application project to generate the binary file
 
 ### Step 3: Prepare Application Image with Header
