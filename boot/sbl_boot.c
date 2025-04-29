@@ -63,9 +63,6 @@ extern int isp_kboot_main(bool isInfiniteIsp);
 
 #ifdef SOC_REMAP_ENABLE
 int boot_remap_go(struct boot_rsp *rsp);
-/* Function declarations for remap functionality */
-void SBL_EnableRemap(uint32_t srcAddr, uint32_t dstAddr, uint32_t size);
-void SBL_DisableRemap(void);
 #endif
 
 #ifdef CONFIG_BOOT_SIGNATURE
@@ -271,7 +268,6 @@ int boot_single_go(struct boot_rsp *rsp)
 
 int sbl_boot_main(void)
 {
-  char ch = 0;
 	struct image_header br_hdr1 = {
 		.ih_hdr_size = 0x2000
 	};
@@ -287,29 +283,15 @@ int sbl_boot_main(void)
 	CRYPTO_InitHardware();
 #endif
 #endif
+
 	sbl_flash_init();
+
 #ifdef TEST_FUNCTION
     enable_image(Permanent_mode);
 #endif	
 	BOOT_LOG_INF("Bootloader Version %s", BOOTLOADER_VERSION);
-	os_heap_init();    
-        BOOT_LOG_INF("remap or not:Y/N\r\n\r\n");
-        ch = GETCHAR();
-        BOOT_LOG_INF("input=%c,\r\n\r\n",ch);
-        if((ch == 'Y') || (ch == 'y'))
-        {
-            BOOT_LOG_INF("With remap!\r\n\r\n");
-            SBL_EnableRemap(BOOT_FLASH_ACT_APP, BOOT_FLASH_ACT_APP+FLASH_AREA_IMAGE_1_SIZE, FLASH_AREA_IMAGE_1_SIZE);
-        }  
-        else if((ch == 'N') || ((ch == 'n') ))
-        {
-	    BOOT_LOG_INF("Without remap!\r\n\r\n");
-            SBL_DisableRemap();
-        }
-        else
-        {
-            BOOT_LOG_INF("Without remap!\r\n\r\n");
-        }
+	os_heap_init();
+
 #ifdef SINGLE_IMAGE
     rc = boot_single_go(&rsp);
 #else
@@ -327,12 +309,16 @@ int sbl_boot_main(void)
         }
     }
     
-	BOOT_LOG_INF("Bootloader chainload address offset: 0x%x", rsp.br_image_off);
-	BOOT_LOG_INF("Reset_Handler address offset: 0x%x", rsp.br_image_off + rsp.br_hdr->ih_hdr_size);
-	BOOT_LOG_INF("Jumping to the image\r\n\r\n");      
+	BOOT_LOG_INF("Bootloader chainload address offset: 0x%x",
+                 rsp.br_image_off);
+	BOOT_LOG_INF("Reset_Handler address offset: 0x%x",
+                 rsp.br_image_off + rsp.br_hdr->ih_hdr_size);
+	BOOT_LOG_INF("Jumping to the image\r\n\r\n");
 	do_boot(&rsp);
+
 	BOOT_LOG_ERR("Never should get here");
-    for (;;);
+    for (;;)
+        ;
 }
 
 
@@ -372,4 +358,3 @@ void enable_image(image2_mode_t mode)
     sbl_flash_write(off, (void *)&image_trailer2, IMAGE_TRAILER_SIZE);
 }
 #endif
-

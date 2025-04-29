@@ -16,12 +16,10 @@
 #define ARCH_ARM_CORTEX_FPU
 #define SOC_IMXRTYYYY_SERIES
 #define SOC_REMAP_ENABLE
-#define COMPONENT_MCU_ISP
 
 /* MCU SBL core */
 
 #define CONFIG_MCUBOOT_MAX_IMG_SECTORS 400
-#define SINGLE_IMAGE
 
 /* MCU SBL Flash Map */
 
@@ -53,8 +51,6 @@
 #define SERIAL_PORT_TYPE_UART 1
 
 /* mcu isp support */
-
-#define ISP_TIMEOUT 5
 
 /* Platform Drivers Config */
 
